@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('fill_surveys', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('survey_id');
+            $table->bigInteger('survey_question_id');
             $table->bigInteger('user_id');
-            $table->string('fill_survey');
+            $table->string('name_user');
+            $table->enum('fill_survey', ['sangat_tidak', 'tidak', 'cukup', 'puas', 'sangat_puas'])->default('cukup');
             $table->timestamps();
         });
     }

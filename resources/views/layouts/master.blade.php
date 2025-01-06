@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard &mdash; Arfa</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
         integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
         crossorigin="anonymous" />
@@ -39,7 +39,7 @@
             @yield('content')
         </div>
         <footer>
-            Copyright © 2024 &nbsp <a href="https://www.youtube.com/c/mulaidarinull" target="_blank" class="ml-1">
+            Copyright © 2024 &nbsp <a href="#" target="_blank" class="ml-1">
                 Mulai Dari null </a> <span> . All rights Reserved</span>
         </footer>
         <div class="overlay action-toggle">

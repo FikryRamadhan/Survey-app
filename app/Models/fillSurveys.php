@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class fillSurveys extends Model
 {
     use HasFactory;
+
+    protected $guarded=[''];
 }
