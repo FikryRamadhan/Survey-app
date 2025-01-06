@@ -50,7 +50,7 @@
             <span class="text-uppercase">Setting</span>
         </li>
         <li>
-            <a href="#" class="link">
+            <a href="{{ route('logout') }}" class="link">
                 <i class="ti ti-power"></i>
                 <span>Log out</span>
             </a>

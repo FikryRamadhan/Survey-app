@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FillSurveyController;
 use App\Http\Controllers\PageSurveyController;
 use App\Http\Controllers\SurveyController;
@@ -22,33 +23,58 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'survey');
 
-Route::middleware('guest')->group(function(){
-    Route::get('survey', [PageSurveyController::class, 'userIndex'])->name('app.survey');
+Route::middleware('auth')->group(function () {
 
-    Route::get('/survey/questions/{survey}', [PageSurveyController::class, 'userQuest'])->name('app.quest');
+    Route::get('/logout', [AuthController::class, 'logout' ])->name('logout');
 
-    Route::post('/survey/submit', [FillSurveyController::class, 'create'])->name('fill_survey.submit');
+    Route::middleware('isUser')->group(function(){
+        Route::get('survey', [PageSurveyController::class, 'userIndex'])->name('app.survey');
 
-    Route::get('/survey/thankyou', [PageSurveyController::class, 'userThankyou'])->name('thankyou');
+        Route::get('/survey/questions/{survey}', [PageSurveyController::class, 'userQuest'])->name('app.quest');
+
+        Route::post('/survey/submit', [FillSurveyController::class, 'create'])->name('fill_survey.submit');
+
+        Route::get('/survey/thankyou', [PageSurveyController::class, 'userThankyou'])->name('thankyou');
+    });
+
+
+    Route::middleware('isAdmin')->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+        Route::prefix('layanan')->group(function () {
+            Route::get('', [SurveyController::class, 'index'])->name('admin.layanan');
+        });
+
+        Route::prefix('question')->group(function () {
+            Route::get('', [SurveyQuestionController::class, 'index'])->name('admin.question');
+        });
+
+        Route::prefix('fill_surveys')->group(function () {
+            Route::get('', [FillSurveyController::class, 'index'])->name('admin.fill_surveys');
+        });
+    });
 });
 
-Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-Route::prefix('layanan')->group(function(){
-    Route::get('', [SurveyController::class, 'index'])->name('admin.layanan');
+Route::middleware('guest')->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::get('/login', [AuthController::class, 'index'])->name('auth.login');
+        Route::post('/login', [AuthController::class, 'loginVerify'])->name('auth.login.process');
+        Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
+        Route::post('/register', [AuthController::class, 'register'])->name('auth.register.process');
+    });
 });
 
-Route::prefix('question')->group(function(){
-    Route::get('', [SurveyQuestionController::class, 'index'])->name('admin.question');
-});
 
-Route::prefix('fill_surveys')->group(function(){
-    Route::get('', [FillSurveyController::class, 'index'])->name('admin.fill_surveys');
-});
+
+
+
+
+
 
 // Route::middleware(['auth'])->group(function(){
 //     Route::middleware('isAdmin')->prefix('admin')->group(function(){
 //     });
 
-    
+
 // });

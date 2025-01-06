@@ -6,12 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey App</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite('resources/css/app.css')
+    <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 
 <body class="bg-gray-900 text-white">
-    <main class="flex flex-col items-center justify-center min-h-screen px-4">
+    <!-- Navigation Bar -->
+    <nav class="w-full bg-gray-800 p-4 flex flex-wrap justify-between items-center">
+        <h1 class="text-lg font-bold text-white">Survey App</h1>
+        <div class="mt-2 sm:mt-0">
+            @csrf
+            <a href="{{ route('logout') }}" type="submit"
+                class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500 transition w-full sm:w-auto">
+                Logout
+            </a>
+        </div>
+    </nav>
+
+    <main class="flex flex-col items-center py-5 justify-center min-h-screen px-4">
         <!-- Header -->
         <header class="text-center mb-6">
             <h1 class="text-2xl font-bold">{{ 'Survey Kepuasan Layanan Publik' }}</h1>
@@ -96,17 +108,17 @@
                             </label>
                             <div class="flex space-x-4">
                                 ${['Sangat Tidak Setuju', 'Tidak Setuju', 'Cukup', 'Puas', 'Sangat Puas'].map(option => `
-                                                    <label
-                                                        class="flex flex-col items-center p-4 bg-gray-900 border border-gray-700 rounded-lg hover:bg-gray-800 cursor-pointer">
-                                                        <input type="radio" name="question_${question.id}" value="${option}"
-                                                            class="hidden form-radio text-blue-500 bg-gray-900 focus:ring-blue-500"
-                                                            required ${question.id === 1 && option === 'Cukup' ? 'checked' : ''}>
-                                                        <span class="text-3xl">
-                                                            ${getEmoji(option)}
-                                                        </span>
-                                                        <span class="mt-2 text-white">${option}</span>
-                                                    </label>
-                                                `).join('')}
+                                                        <label
+                                                            class="flex flex-col items-center p-4 bg-gray-900 border border-gray-700 rounded-lg hover:bg-gray-800 cursor-pointer">
+                                                            <input type="radio" name="question_${question.id}" value="${option}"
+                                                                class="hidden form-radio text-blue-500 bg-gray-900 focus:ring-blue-500"
+                                                                required ${question.id === 1 && option === 'Cukup' ? 'checked' : ''}>
+                                                            <span class="text-3xl">
+                                                                ${getEmoji(option)}
+                                                            </span>
+                                                            <span class="mt-2 text-white">${option}</span>
+                                                        </label>
+                                                    `).join('')}
                             </div>
                         `;
                                 questionsList.appendChild(questionDiv);
