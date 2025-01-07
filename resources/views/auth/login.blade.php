@@ -29,6 +29,11 @@
                         {{ session('error') }}
                     </div>
                 @endif
+                @if (session('success'))
+                    <div class="mb-4 px-4 py-3 bg-green-500 text-white rounded-lg shadow">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 @csrf
                 <!-- Email Input -->
                 <div class="mb-4">
@@ -41,7 +46,7 @@
                                     d="M16 11V5a4 4 0 10-8 0v6m12 0a4 4 0 11-8 0m0 0v4m4 4H8" />
                             </svg>
                         </span>
-                        <input type="text" name="email" placeholder="Your Email"
+                        <input type="text" name="email" placeholder="Masukan email Anda "
                             class="w-full pl-10 pr-4 py-2 rounded-lg border focus:outline-none focus:ring-2
                             @error('email') border-red-500 focus:ring-red-500 @else border-gray-900 focus:ring-green-500 @enderror">
                     </div>
@@ -61,7 +66,7 @@
                                     d="M12 15v-3m0 0a4 4 0 114 4H8a4 4 0 114-4m0 0v3" />
                             </svg>
                         </span>
-                        <input type="password" name="password" placeholder="Your Password"
+                        <input type="password" name="password" placeholder="Masukan password Anda"
                             class="w-full pl-10 pr-4 py-2 rounded-lg border focus:outline-none focus:ring-2
                             @error('password') border-red-500 focus:ring-red-500 @else border-gray-900 focus:ring-green-500 @enderror">
                     </div>
@@ -77,7 +82,7 @@
                 <!-- Register Link -->
                 <div class="flex items-center justify-center mt-4">
                     <span class="text-white">Belum punya akun?</span>
-                    <a href="#" class="text-sm ml-2 text-blue-600 hover:underline">Daftar disini!</a>
+                    <a href="{{ route('auth.register') }}" class="text-sm ml-2 text-blue-600 hover:underline">Daftar disini!</a>
                 </div>
             </form>
         </div>

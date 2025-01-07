@@ -61,7 +61,7 @@ Route::middleware('guest')->group(function () {
         Route::get('/login', [AuthController::class, 'index'])->name('auth.login');
         Route::post('/login', [AuthController::class, 'loginVerify'])->name('auth.login.process');
         Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
-        Route::post('/register', [AuthController::class, 'register'])->name('auth.register.process');
+        Route::post('/register', [AuthController::class, 'registerVerify'])->name('auth.register.process');
     });
 });
 
