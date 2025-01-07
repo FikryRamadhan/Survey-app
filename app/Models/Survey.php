@@ -9,6 +9,8 @@ class Survey extends Model
 {
     use HasFactory;
 
+    protected $guarded=[''];
+
     public function surveyQuestion(){
         return $this->hasMany(SurveyQuestion::class);
     }

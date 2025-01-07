@@ -1,7 +1,7 @@
 <div class="sidebar-content" id="nav">
     <ul>
         <li>
-            <a href="#" class="link">
+            <a href="{{ route('admin.dashboard') }}" class="link">
                 <i class="ti-home"></i>
                 <span>Dashboard</span>
             </a>
@@ -15,7 +15,7 @@
                 <span>User</span>
             </a>
             <ul class="sub-menu">
-                <li><a href="#" class="link">
+                <li><a href="{{ route('user.index') }}" class="link">
                         <span>Kelola User</span></a>
                 </li>
             </ul>
@@ -51,7 +51,7 @@
         </li>
         <li>
             <a href="{{ route('logout') }}" class="link">
-                <i class="ti ti-power"></i>
+                <i class="ti-power-off"></i>
                 <span>Log out</span>
             </a>
         </li>

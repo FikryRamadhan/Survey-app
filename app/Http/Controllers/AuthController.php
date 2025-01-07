@@ -36,7 +36,7 @@ class AuthController extends Controller
                 return redirect()->back()->with('error', 'Email atau password salah.');
             }
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Email atau password salah.');
+            return redirect()->route('auth.login')->with('error', $e->getMessage());
         }
     }
 
@@ -76,7 +76,7 @@ class AuthController extends Controller
             // Arahkan ke halaman login atau halaman lain setelah registrasi
             return redirect()->route('auth.login')->with('success', 'Registration successful! Please log in.');
         } catch (Exception $e) {
-            return redirect()->back()->with(['error' => 'Daftar gagal harap cek inputan!']);
+            return redirect()->route('admin.register')->with('error', $e->getMessage());
         }
     }
 }

@@ -38,10 +38,6 @@
         <div class="main-content">
             @yield('content')
         </div>
-        <footer>
-            Copyright © 2024 &nbsp <a href="#" target="_blank" class="ml-1">
-                Mulai Dari null </a> <span> . All rights Reserved</span>
-        </footer>
         <div class="overlay action-toggle">
         </div>
     </div>
