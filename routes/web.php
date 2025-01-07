@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('question')->group(function () {
             Route::get('', [SurveyQuestionController::class, 'index'])->name('admin.question');
+            Route::post('/create', [SurveyQuestionController::class, 'create'])->name('admin.question.create');
         });
 
         Route::prefix('fill_surveys')->group(function () {

@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -93,5 +96,20 @@ class DatabaseSeeder extends Seeder
 
             DB::table('survey_questions')->insert($questions);
         }
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => 'admin', // Tambahkan kolom 'role' jika ada
+        ]);
+
+        // Regular User
+        User::create([
+            'name' => 'User',
+            'email' => 'user@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => 'users', // Tambahkan kolom 'role' jika ada
+        ]);
     }
 }

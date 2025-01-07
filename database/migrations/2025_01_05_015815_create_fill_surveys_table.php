@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('survey_question_id');
             $table->bigInteger('user_id');
             $table->string('name_user');
-            $table->enum('fill_survey', ['sangat_tidak', 'tidak', 'cukup', 'puas', 'sangat_puas'])->default('cukup');
+            $table->enum('fill_survey', ['Sangat Tidak', 'tidak', 'cukup', 'puas', 'Sangat Puas'])->default('cukup');
             $table->timestamps();
         });
     }

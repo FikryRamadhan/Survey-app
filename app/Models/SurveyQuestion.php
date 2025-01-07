@@ -9,6 +9,8 @@ class SurveyQuestion extends Model
 {
     use HasFactory;
 
+    protected $guarded=[''];
+
     // Definisikan relasi dengan Survey
     public function survey()
     {

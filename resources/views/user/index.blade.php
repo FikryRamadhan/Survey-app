@@ -30,9 +30,15 @@
             <p class="text-gray-400">{{ 'Kami ingin mengetahui pendapat Anda tentang layanan kami.' }}</p>
         </header>
 
+
+
+
         <!-- Question Form -->
         <form id="survey-form" data-action="{{ route('fill_survey.submit') }}"
             class="w-full max-w-lg bg-gray-800 p-4 rounded-lg shadow-md" method="POST" action="/survey/submit">
+            <div class="mb-4 px-4 py-3 bg-red-500 text-white rounded-lg shadow hidden">
+
+            </div>
             @csrf
             <div id="question-container">
                 <div class="question">
@@ -40,7 +46,7 @@
                         <label for="name_user" class="block text-white font-medium mb-2">
                             Masukan Nama Anda <span class="text-red-600">*</span>
                         </label>
-                        <input type="text" id="name_user" name="name_user"
+                        <input type="text" id="name_user" name="name_user" value="{{ auth()->user()->name }}"
                             class="w-full px-4 py-2 bg-gray-900 text-white border border-gray-600 rounded focus:outline-none focus:ring focus:ring-blue-500"
                             placeholder="Masukkan nama Anda" required />
                     </div>
@@ -107,18 +113,18 @@
                                 ${question.question} <span class="text-red-600">*</span>
                             </label>
                             <div class="flex space-x-4">
-                                ${['Sangat Tidak Setuju', 'Tidak Setuju', 'Cukup', 'Puas', 'Sangat Puas'].map(option => `
-                                                        <label
-                                                            class="flex flex-col items-center p-4 bg-gray-900 border border-gray-700 rounded-lg hover:bg-gray-800 cursor-pointer">
-                                                            <input type="radio" name="question_${question.id}" value="${option}"
-                                                                class="hidden form-radio text-blue-500 bg-gray-900 focus:ring-blue-500"
-                                                                required ${question.id === 1 && option === 'Cukup' ? 'checked' : ''}>
-                                                            <span class="text-3xl">
-                                                                ${getEmoji(option)}
-                                                            </span>
-                                                            <span class="mt-2 text-white">${option}</span>
-                                                        </label>
-                                                    `).join('')}
+                                ${['Sangat Tidak', 'Tidak', 'Cukup', 'Puas', 'Sangat Puas'].map(option => `
+                                                                        <label
+                                                                            class="flex flex-col items-center p-4 bg-gray-900 border border-gray-700 rounded-lg hover:bg-gray-800 cursor-pointer">
+                                                                            <input type="radio" name="question_${question.id}" value="${option}"
+                                                                                class="hidden form-radio text-blue-500 bg-gray-900 focus:ring-blue-500"
+                                                                                required ${question.id === 1 && option === 'Cukup' ? 'checked' : ''}>
+                                                                            <span class="text-3xl">
+                                                                                ${getEmoji(option)}
+                                                                            </span>
+                                                                            <span class="mt-2 text-white">${option}</span>
+                                                                        </label>
+                                                                    `).join('')}
                             </div>
                         `;
                                 questionsList.appendChild(questionDiv);
@@ -131,9 +137,9 @@
 
         function getEmoji(option) {
             switch (option) {
-                case 'Sangat Tidak Setuju':
+                case 'Sangat Tidak':
                     return '😠';
-                case 'Tidak Setuju':
+                case 'Tidak':
                     return '😐';
                 case 'Cukup':
                     return '🙂';
@@ -204,13 +210,38 @@
                 },
                 success: function(response) {
                     // Tanggapan sukses dari server
-                    alert('Survey submitted successfully!');
-                    console.log(response);
+                    window.location.href = "{{ route('thankyou') }}"
                 },
-                error: function(xhr, status, error) {
-                    // Jika ada error saat pengiriman
-                    alert('Error submitting survey: ' + error);
-                    console.error(xhr, status, error);
+                error: function(xhr) {
+                    // Parse response jika belum berupa JSON
+                    let response;
+                    try {
+                        response = JSON.parse(xhr.responseText);
+                    } catch (e) {
+                        return;
+                    }
+
+                    // Seleksi elemen alert
+                    const alertComponent = document.querySelector('.bg-red-500');
+
+                    if (alertComponent) {
+                        // Cek apakah ada message di response
+                        let errorMessage = response.message || 'An unknown error occurred.';
+
+                        // Tambahkan pesan dari errors jika ada
+                        if (response.errors) {
+                            const errorDetails = Object.values(response.errors)
+                                .flat() // Gabungkan semua pesan
+                                .join(', '); // Pisahkan dengan koma
+                            errorMessage += ` (${errorDetails})`;
+                        }
+
+                        // Masukkan pesan ke dalam komponen alert
+                        alertComponent.textContent = errorMessage;
+
+                        // Hapus class 'hidden' agar terlihat
+                        alertComponent.classList.remove('hidden');
+                    }
                 }
             });
         });
